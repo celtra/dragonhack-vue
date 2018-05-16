@@ -124,7 +124,7 @@ button:hover {
 /* GRAPH */
 .performance {
     display: flex;
-    align-items: flex-start;
+    align-items: flex-end;
     justify-content: flex-end;
     height: 400px;
     width: 415px;

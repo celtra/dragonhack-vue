@@ -8,7 +8,7 @@
 
         <p class="time">{{ Math.floor(time) }}s</p>
         <p class="score">{{ correctIndices.length }} / {{ written.length }}</p>
-        <p class="streak">{{ correctIndicesInLastFiveSeconds.length }} characters in the last 5 seconds</p>
+        <p class="streak">{{ correctIndicesInLastSeconds.length }} characters in the last 5 seconds</p>
 
         <div class="performance">
             <div v-for="(result, index) in timeResults" :key="index" :style="{ 'height': `${Math.floor(result * 2) + 5}%` }"></div>
@@ -39,7 +39,7 @@ export default {
 
         this.intervalId = setInterval(() => {
             this.time = Date.now() / 1000 - this.startTime
-            this.timeResults.push(this.correctIndicesInLastFiveSeconds.length)
+            this.timeResults.push(this.correctIndicesInLastSeconds.length)
         }, 1000)
         this.$refs.text.focus()
     },
@@ -63,15 +63,16 @@ export default {
             return indices
         },
         correctIndicesInLastSeconds () {
+            let numSeconds = 3
             return Object.keys(this.timeByIndex).map(k => parseInt(k)).filter(index => {
                 let time = this.timeByIndex[index]
-                return time !== null && time > this.time - 5 && this.correctIndices.includes(index)
+                return time !== null && time > this.time - numSeconds && this.correctIndices.includes(index)
             })
         },
         streakText () {
-            if (this.correctIndicesInLastFiveSeconds.length >= 40)
+            if (this.correctIndicesInLastSeconds.length >= 40)
                 return "Too fast!"
-            if (this.correctIndicesInLastFiveSeconds.length >= 20)
+            if (this.correctIndicesInLastSeconds.length >= 20)
                 return "Keep going!"
             return null
         }
