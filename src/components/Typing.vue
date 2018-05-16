@@ -51,7 +51,7 @@ export default {
             return sentences[this.sentenceIndex]
         },
         correctIndices () {
-            let normalize = (s) => s.toLowerCase().replace(/[^\w]/g, '')
+            let normalize = (s) => s.toLowerCase()
 
             let indices = []
             for (let i = 0; i < this.written.length; i++) {
@@ -70,9 +70,9 @@ export default {
             })
         },
         streakText () {
-            if (this.correctIndicesInLastSeconds.length >= 40)
+            if (this.correctIndicesInLastSeconds.length >= 22)
                 return "Too fast!"
-            if (this.correctIndicesInLastSeconds.length >= 20)
+            if (this.correctIndicesInLastSeconds.length >= 14)
                 return "Keep going!"
             return null
         }
@@ -84,7 +84,7 @@ export default {
                     this.$set(this.timeByIndex, this.written.length - 1, null)
                     this.written = this.written.slice(0, -1)
                 }
-            } else if (e.keyCode >= 65 && e.keyCode <= 90 || e.keyCode === 32) {
+            } else if (e.key.length === 1 && e.key.charCodeAt(0) >= 32 && e.key.charCodeAt(0) <= 126) {
                 this.$set(this.timeByIndex, this.written.length, Date.now() / 1000 - this.startTime)
                 this.written += e.key
 
