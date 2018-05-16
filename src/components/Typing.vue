@@ -27,7 +27,7 @@ export default {
             sentenceIndex: 0,
             written: '',
             time: 0,
-            timeByIndex: {},
+            writeTimes: [],
             timeResults: [],
             correctCount: 0
         }
@@ -64,8 +64,7 @@ export default {
         },
         correctIndicesInLastSeconds () {
             let numSeconds = 3
-            return Object.keys(this.timeByIndex).map(k => parseInt(k)).filter(index => {
-                let time = this.timeByIndex[index]
+            return this.writeTimes.filter((time, index) => {
                 return time !== null && time > this.time - numSeconds && this.correctIndices.includes(index)
             })
         },
@@ -81,11 +80,11 @@ export default {
         handleInput (e) {
             if (e.keyCode === 8) {
                 if (this.written.length > 0) {
-                    this.$set(this.timeByIndex, this.written.length - 1, null)
+                    this.writeTimes.splice(this.writeTimes.length - 1, 1)
                     this.written = this.written.slice(0, -1)
                 }
             } else if (e.key.length === 1 && e.key.charCodeAt(0) >= 32 && e.key.charCodeAt(0) <= 126) {
-                this.$set(this.timeByIndex, this.written.length, Date.now() / 1000 - this.startTime)
+                this.writeTimes.push(Date.now() / 1000 - this.startTime)
                 this.written += e.key
 
                 if (this.written.length >= this.text.length) {
