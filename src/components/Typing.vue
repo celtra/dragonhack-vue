@@ -60,14 +60,13 @@ export default {
             return indices
         },
         correctIndicesInLastSeconds () {
-            return this.writeTimes.filter((time, index) => {
-                return time !== null && time > this.time - this.streakDuration && this.correctIndices.includes(index)
-            })
+            return this.writeTimes.filter((time, index) =>  
+                time > this.time - this.streakDuration && this.correctIndices.includes(index))
         },
         streakText () {
             if (this.correctIndicesInLastSeconds.length >= 8 * this.streakDuration)
                 return "Too fast!"
-            if (this.correctIndicesInLastSeconds.length >= 2 * this.streakDuration)
+            if (this.correctIndicesInLastSeconds.length >= 5 * this.streakDuration)
                 return "Keep going!"
             return null
         }
