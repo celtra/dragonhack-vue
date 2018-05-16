@@ -1,6 +1,8 @@
 <template>
     <div>
-        <div class="streak-message" :style="streakText ? {} : { visibility: 'hidden' }">{{ streakText }}</div>
+        <div class="streak-message">
+            <p v-if="streakText">{{ streakText }}</p>
+        </div>
 
         <div class="text" tabindex="0" @keydown="handleInput" ref="text">
             <span v-for="(c, index) in text" :key="c.id" :class="getClass(index)">{{ c }}</span>
@@ -17,6 +19,8 @@
 </template>
 
 <script>
+import sentences from '../sentences'
+
 export default {
     data () {
         return {
@@ -27,12 +31,6 @@ export default {
             timeResults: [],
             correctCount: 0
         }
-    },
-    created () {
-        this.sentences = [
-            'Some sample text you have to type out really quickly to win',
-            'Another sentence'
-        ]
     },
     mounted () {
         this.$refs.text.focus()
@@ -50,7 +48,7 @@ export default {
     },
     computed: {
         text () {
-            return this.sentences[this.sentenceIndex]
+            return sentences[this.sentenceIndex]
         },
         correctIndices () {
             let normalize = (s) => s.toLowerCase().replace(/[^\w]/g, '')
@@ -93,7 +91,7 @@ export default {
                 if (this.written.length >= this.text.length) {
                     this.correctCount += this.correctIndices.length
 
-                    if (this.sentenceIndex < this.sentences.length - 1) {
+                    if (this.sentenceIndex < sentences.length - 1) {
                         this.written = ''
                         this.sentenceIndex ++
                     } else {

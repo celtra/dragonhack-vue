@@ -92,13 +92,16 @@ button:hover {
     display: block;
     margin: 50px auto;
     padding: 0px 50px;
-    background-color: #18cc7e;
     color: white;
     font-size: 36px;
     height: 80px;
     line-height: 80px;
     width: 400px;
     animation: blinker 1s ease infinite;
+}
+
+.streak-message > p {
+    background-color: #18cc7e;
 }
 
 @keyframes blinker {
