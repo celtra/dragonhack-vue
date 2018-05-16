@@ -24,12 +24,13 @@ import sentences from '../sentences'
 export default {
     data () {
         return {
+            streakDuration: 3,
             sentenceIndex: 0,
             written: '',
+            correctCount: 0,
             time: 0,
             writeTimes: [],
-            timeResults: [],
-            correctCount: 0
+            timeResults: []
         }
     },
     mounted () {
@@ -51,27 +52,22 @@ export default {
             return sentences[this.sentenceIndex]
         },
         correctIndices () {
-            let normalize = (s) => s.toLowerCase()
-
             let indices = []
-            for (let i = 0; i < this.written.length; i++) {
-                if (normalize(this.text[i]) === normalize(this.written[i])) {
-                    indices.push(i)
-                }
-            }
-
+            Array.from(this.written).forEach((c, index) => {
+                if (c === this.text[index])
+                    indices.push(index)
+            })
             return indices
         },
         correctIndicesInLastSeconds () {
-            let numSeconds = 3
             return this.writeTimes.filter((time, index) => {
-                return time !== null && time > this.time - numSeconds && this.correctIndices.includes(index)
+                return time !== null && time > this.time - this.streakDuration && this.correctIndices.includes(index)
             })
         },
         streakText () {
-            if (this.correctIndicesInLastSeconds.length >= 22)
+            if (this.correctIndicesInLastSeconds.length >= 8 * this.streakDuration)
                 return "Too fast!"
-            if (this.correctIndicesInLastSeconds.length >= 14)
+            if (this.correctIndicesInLastSeconds.length >= 2 * this.streakDuration)
                 return "Keep going!"
             return null
         }
