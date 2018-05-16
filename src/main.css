@@ -27,16 +27,16 @@ button:hover {
     background: #42d492;
 }
 
-/* APP */
-.main {
-    margin-top: 150px;
-}
-
-.highscores > h2 {
+h2 {
     font-size: 36px;
     margin: 0;
     margin-top: 50px;
     font-weight: normal;
+}
+
+/* APP */
+.main {
+    margin-top: 150px;
 }
 
 .highscores > h4 {

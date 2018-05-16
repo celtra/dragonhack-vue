@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Typing v-if="isPlaying" @score="addScore" />
+        <Typing v-if="isPlaying"/>
         <div class="main" v-else>
             <button @click="isPlaying = true">{{ scores.length > 0 ? "I'm ready, play again!" : "I'm ready!" }}</button>
 
@@ -27,7 +27,7 @@ export default {
     data () {
         return {
             scores: [],
-            isPlaying: false
+            isPlaying: true
         }
     },
     computed: {
