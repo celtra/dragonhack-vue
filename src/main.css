@@ -1,10 +1,35 @@
-#app {
+body {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    margin-top: 100px;
+    margin: 0px;
+}
+
+p {
+    margin: 0;
+}
+
+button {
+    outline: none;
+    border: none;
+    border-radius: 0;
+    color: #fff;
+    font-size: 36px;
+    background: #19c276;
+    padding: 15px 50px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #42d492;
+}
+
+/* APP */
+.main {
+    margin-top: 150px;
 }
 
 .highscores > h2 {
@@ -23,135 +48,105 @@
 }
 
 .highscores > p {
-    font-size: 18px;
+    font-size: 22px;
     margin: 0px;
     margin-bottom: 10px;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-button {
-    outline: none;
-    border: none;
-    border-radius: 0;
-    color: #fff;
-    font-size: 36px;
-    background: #19c276;
-    padding: 15px 50px;
-    text-decoration: none;
-    cursor: pointer;
+.highscores > p > span {
+    font-size: 14px;
+    color: #888;
+    margin-right: 20px;
 }
 
-button:hover {
-    background: #42d492;
-}
-/* END APP */
-
+/* TEXT */
 .text {
     font-size: 24px;
     width: 80%;
     margin: 0 auto;
     text-align: center;
-    margin: 100px;
     outline: none;
 }
-.word {
-    font-size: 24px;
-    display: block;
-    margin: 0 auto;
+
+.text > span{
+    color: gray;
 }
-.current {
+.text > span.current {
     color: white;
     background-color: #000;
 }
-.correct {
-    color: lightgreen;
+.text > span.correct {
+    color: green;
 }
-.wrong {
+.text > span.wrong {
     color: red;
 }
-.neutral {
-    color: gray;
+
+/* INFO */
+.streak-message {
+    display: block;
+    margin: 50px auto;
+    padding: 0px 50px;
+    background-color: #18cc7e;
+    color: white;
+    font-size: 36px;
+    height: 80px;
+    line-height: 80px;
+    width: 400px;
+    animation: blinker 1s ease infinite;
 }
-/* MATEVZ END */
+
+@keyframes blinker {
+    50% {
+        opacity: 0.7;
+    }
+}
 
 .time {
+    margin-top: 80px;
     font-size: 30px;
 }
 
-.words > span {
-    margin-right: 5px;
-}
-
-.current {
-    color: #226bda;
-    text-shadow:0px 0px 1px #226bda;
-}
-
-.correct {
-    color: green;
-}
-
-.miss {
-    color: red;
-}
-
-input {
-    width: 200px;
-    height: 40px;
-    font-size: 26px;
-    outline: none;
-    margin-top: 50px;
-}
-
 .score {
-    margin: 0;
-    margin-top: 50px;
+    margin-top: 20px;
     font-size: 32px;
     font-weight: bold;
 }
 
-.wpm {
-    margin: 0;
-    margin-top: 5px;
+.streak {
     font-size: 20px;
 }
 
-.streak {
-    background-color: #18cc7e;
-    padding: 20px 50px;
-    display: inline-block;
-    margin-top: 50px;
-    font-size: 36px;
-    color: white;
-}
-
+/* GRAPH */
 .performance {
-    overflow: hidden;
-    margin-top: 50px;
     display: flex;
-    align-items: flex-end;
+    align-items: flex-start;
     justify-content: flex-end;
     height: 400px;
-    width: 315px;
-    margin: 0 auto;
+    width: 415px;
+    overflow: hidden;
+    margin: 50px auto 0px auto;
 }
 
 .performance > div {
     width: 30px;
-    margin-right: 5px;
+    margin-left: 5px;
     background-color: #00b1ff;
-    animation-name: expand;
-    animation-duration: 0.5s;
+    animation: expand 0.3s ease-out;
     flex-shrink: 0;
 }
 
 @keyframes expand {
     from {
         width: 0px;
-        margin-right: 0px;
+        margin-left: 0px;
     }
     to {
         width: 30px;
-        margin-right: 5px;
+        margin-left: 5px;
     }
 }

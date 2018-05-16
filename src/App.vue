@@ -1,14 +1,14 @@
 <template>
-    <div id="app">
+    <div>
         <Typing v-if="isPlaying" @score="addScore" />
-        <div v-else>
-            <button @click="isPlaying = true">I'm ready!</button>
+        <div class="main" v-else>
+            <button @click="isPlaying = true">{{ scores.length > 0 ? "I'm ready, play again!" : "I'm ready!" }}</button>
 
             <div class="highscores" v-if="scores.length > 0">
                 <h2>Best scores</h2>
                 <h4>in characters per second</h4>
 
-                <p v-for="(score, index) in scoresOrdered" :key="index">{{ score }}</p>
+                <p v-for="(score, index) in displayScores" :key="index"><span>#{{ score.try }}</span> {{ score.score.toFixed(2) }}</p>
             </div>
         </div>
     </div>
@@ -24,13 +24,18 @@ export default {
     },
     data () {
         return {
-            scores: [1],
+            scores: [],
             isPlaying: false
         }
     },
     computed: {
-        scoresOrdered () {
-            return this.scores.sort().reverse()
+        displayScores () {
+            return this.scores.map((score, index) => {
+                return {
+                    try: index + 1,
+                    score: score
+                }
+            }).sort((a, b) => b.score - a.score)
         }
     },
     methods: {
