@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import sentences from '../sentences'
+import { sentences, validCharacters } from '../data'
 
 export default {
     data () {
@@ -73,26 +73,31 @@ export default {
     },
     methods: {
         handleInput (e) {
-            if (e.keyCode === 8) {
-                if (this.written.length > 0) {
-                    this.writeTimes = this.writeTimes.slice(0, -1)
-                    this.written = this.written.slice(0, -1)
-                }
-            } else if (e.key.length === 1 && e.key.charCodeAt(0) >= 32 && e.key.charCodeAt(0) <= 126) {
-                this.writeTimes.push(Date.now() / 1000 - this.startTime)
-                this.written += e.key
+            if (e.code === 'Backspace')
+                this.deleteInput()
+            else if (validCharacters.includes(e.key))
+                this.addInput(e.key)
+        },
+        deleteInput () {
+            this.writeTimes = this.writeTimes.slice(0, -1)
+            this.written = this.written.slice(0, -1)
+        },
+        addInput (key) {
+            this.writeTimes.push(Date.now() / 1000 - this.startTime)
+            this.written += key
 
-                if (this.written.length === this.text.length) {
-                    this.correctCount += this.correctIndices.length
-                    this.written = ''
+            if (this.written.length === this.text.length)
+                this.handleEndOfSentence()
+        },
+        handleEndOfSentence () {
+            this.correctCount += this.correctIndices.length
+            this.written = ''
 
-                    if (this.sentenceIndex + 1 === sentences.length) {
-                        let time = Date.now() / 1000 - this.startTime
-                        if (time > 0) this.$emit('score', this.correctCount / time)
-                    } else {
-                        this.sentenceIndex ++
-                    }
-                }
+            if (this.sentenceIndex === sentences.length - 1) {
+                let time = Date.now() / 1000 - this.startTime
+                this.$emit('score', this.correctCount / time)
+            } else {
+                this.sentenceIndex ++
             }
         },
         getClass (index) {
