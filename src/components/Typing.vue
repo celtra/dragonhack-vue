@@ -75,22 +75,22 @@ export default {
         handleInput (e) {
             if (e.keyCode === 8) {
                 if (this.written.length > 0) {
-                    this.writeTimes.splice(this.writeTimes.length - 1, 1)
+                    this.writeTimes = this.writeTimes.slice(0, -1)
                     this.written = this.written.slice(0, -1)
                 }
             } else if (e.key.length === 1 && e.key.charCodeAt(0) >= 32 && e.key.charCodeAt(0) <= 126) {
                 this.writeTimes.push(Date.now() / 1000 - this.startTime)
                 this.written += e.key
 
-                if (this.written.length >= this.text.length) {
+                if (this.written.length === this.text.length) {
                     this.correctCount += this.correctIndices.length
+                    this.written = ''
 
-                    if (this.sentenceIndex < sentences.length - 1) {
-                        this.written = ''
-                        this.sentenceIndex ++
-                    } else {
+                    if (this.sentenceIndex + 1 === sentences.length) {
                         let time = Date.now() / 1000 - this.startTime
                         if (time > 0) this.$emit('score', this.correctCount / time)
+                    } else {
+                        this.sentenceIndex ++
                     }
                 }
             }
