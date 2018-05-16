@@ -35,13 +35,15 @@ export default {
         ]
     },
     mounted () {
+        this.$refs.text.focus()
+
         this.startTime = Date.now() / 1000
 
         this.intervalId = setInterval(() => {
             this.time = Date.now() / 1000 - this.startTime
             this.timeResults.push(this.correctIndicesInLastSeconds.length)
+            this.$refs.text.focus()
         }, 1000)
-        this.$refs.text.focus()
     },
     beforeDestroy () {
         clearInterval(this.intervalId)

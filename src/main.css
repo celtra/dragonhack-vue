@@ -84,6 +84,7 @@ button:hover {
 }
 .text > span.wrong {
     color: red;
+    border-bottom: 3px solid red;
 }
 
 /* INFO */
