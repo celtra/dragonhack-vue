@@ -10,7 +10,7 @@
 
         <p class="time">{{ Math.floor(time) }}s</p>
         <p class="score">{{ correctCharsCount }} / {{ text.length }}</p>
-        <p class="streak">{{ correctIndicesInLastSeconds.length }} characters in the last 5 seconds</p>
+        <p class="streak">{{ correctIndicesInLastSeconds.length }} characters in the last {{ streakDuration }} seconds</p>
 
         <div class="performance">
             <div v-for="(result, index) in timeResults" :key="index" :style="{ 'height': `${Math.floor(result * 2) + 5}%` }"></div>
