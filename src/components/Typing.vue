@@ -4,7 +4,7 @@
             <p v-if="streakText">{{ streakText }}</p>
         </div>
 
-        <div class="sentence" tabindex="0" @keydown="handleInput" ref="sentence">
+        <div class="sentence" tabindex="0">
             <span v-for="(c, index) in sentence" :key="index" :class="getClass(index)">{{ c }}</span>
         </div>
 
@@ -21,7 +21,8 @@
 </template>
 
 <script>
-import { sentences, isValidChar } from '../data'
+import sentences from '../sentences'
+import listenForInput from '../input'
 
 export default {
     data () {
@@ -36,7 +37,7 @@ export default {
         }
     },
     mounted () {
-        this.$refs.sentence.focus()
+        listenForInput(this.addInput, this.deleteInput)
 
         this.startTime = Date.now()
 
@@ -62,18 +63,12 @@ export default {
         streakText () {
             if (this.streakCount >= this.streakDuration / 1000 * 8)
                 return "Too fast!"
-            if (this.streakCount >= 4 * this.streakDuration / 1000 * 4)
+            if (this.streakCount >= this.streakDuration / 1000 * 4)
                 return "Keep going!"
             return null
         }
     },
     methods: {
-        handleInput (e) {
-            if (e.key === 'Backspace')
-                this.deleteInput()
-            else if (isValidChar(e.key))
-                this.addInput(e.key)
-        },
         deleteInput () {
             this.text = this.text.slice(0, -1)
             this.writeTimes = this.writeTimes.slice(0, -1)
