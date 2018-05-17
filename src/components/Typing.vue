@@ -62,7 +62,7 @@ export default {
         streakText () {
             if (this.streakCount >= this.streakDuration / 1000 * 8)
                 return "Too fast!"
-            if (this.streakCount >= 4 * this.streakDuration / 1000 * 4)
+            if (this.streakCount >= this.streakDuration / 1000 * 4)
                 return "Keep going!"
             return null
         }
