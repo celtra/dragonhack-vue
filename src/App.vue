@@ -27,7 +27,7 @@ export default {
     data () {
         return {
             scores: [],
-            isPlaying: false
+            isPlaying: true
         }
     },
     computed: {

@@ -13,7 +13,9 @@
         <p class="streak">{{ streakCount }} characters in the last {{ streakDuration / 1000 }} seconds</p>
 
         <div class="performance">
-            <div v-for="(result, index) in streakTracking" :key="index" :style="{ 'height': `${Math.floor(result * 2) + 5}%` }"></div>
+            <div v-for="(result, index) in streakTracking" :key="index"
+                :style="{ 'height': `${Math.floor(result * 2) + 5}%` }"
+            ></div>
         </div>
     </div>
 </template>
@@ -41,11 +43,7 @@ export default {
         this.intervalId = setInterval(() => {
             this.time = Date.now() - this.startTime
             this.streakTracking.push(this.streakCount)
-            this.$refs.sentence.focus()
         }, 1000)
-    },
-    beforeDestroy () {
-        clearInterval(this.intervalId)
     },
     computed: {
         sentence () {
@@ -62,8 +60,10 @@ export default {
                 time > this.time - this.streakDuration && this.textResult[index]).length
         },
         streakText () {
-            if (this.streakCount >= 8 * this.streakDuration) return "Too fast!"
-            if (this.streakCount >= 4 * this.streakDuration) return "Keep going!"
+            if (this.streakCount >= this.streakDuration / 1000 * 8)
+                return "Too fast!"
+            if (this.streakCount >= 4 * this.streakDuration / 1000 * 4)
+                return "Keep going!"
             return null
         }
     },
@@ -75,12 +75,12 @@ export default {
                 this.addInput(e.key)
         },
         deleteInput () {
-            this.writeTimes = this.writeTimes.slice(0, -1)
             this.text = this.text.slice(0, -1)
+            this.writeTimes = this.writeTimes.slice(0, -1)
         },
         addInput (char) {
-            this.writeTimes.push(Date.now() - this.startTime)
             this.text += char
+            this.writeTimes.push(Date.now() - this.startTime)
 
             if (this.text.length === this.sentence.length)
                 this.handleEndOfSentence()
@@ -98,10 +98,14 @@ export default {
             }
         },
         getClass (index) {
-            if (index > this.text.length) return ''
-            else if (index === this.text.length) return 'current'
-            else if (this.textResult[index]) return 'correct'
-            else return 'wrong'
+            if (index > this.text.length)
+                return ''
+            else if (index === this.text.length)
+                return 'current'
+            else if (this.textResult[index])
+                return 'correct'
+            else
+                return 'wrong'
         }
     }
 }
