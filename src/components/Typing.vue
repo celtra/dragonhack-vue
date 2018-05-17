@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { sentences, validCharacters } from '../data'
+import { sentences, isValidChar } from '../data'
 
 export default {
     data () {
