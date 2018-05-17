@@ -2,7 +2,7 @@
     <div>
         <Typing v-if="isPlaying" @score="addScore" />
         <div class="main" v-else>
-            <button @click="isPlaying = true">{{ scores.length > 0 ? "I'm ready, play again!" : "I'm ready!" }}</button>
+            <button @click="isPlaying = true">I'm ready, play again!</button>
 
             <div class="highscores" v-if="scores.length > 0">
                 <h2>Best scores</h2>
