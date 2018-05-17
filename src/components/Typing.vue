@@ -5,15 +5,15 @@
         </div>
 
         <div class="sentence" tabindex="0" @keydown="handleInput" ref="sentence">
-            <span v-for="(c, index) in sentence" :key="c.id" :class="getClass(index)">{{ c }}</span>
+            <span v-for="(c, index) in sentence" :key="index" :class="getClass(index)">{{ c }}</span>
         </div>
 
         <p class="time">{{ Math.floor(time / 1000) }}s</p>
         <p class="score">{{ correctCount }} / {{ text.length }}</p>
-        <p class="streak">{{ streakCount }} characters in the last {{ streakDuration }} seconds</p>
+        <p class="streak">{{ streakCount }} characters in the last {{ streakDuration / 1000 }} seconds</p>
 
         <div class="performance">
-            <div v-for="(result, index) in timeResults" :key="index" :style="{ 'height': `${Math.floor(result * 2) + 5}%` }"></div>
+            <div v-for="(result, index) in streakTracking" :key="index" :style="{ 'height': `${Math.floor(result * 2) + 5}%` }"></div>
         </div>
     </div>
 </template>
@@ -28,7 +28,7 @@ export default {
             time: 0,
             writeTimes: [],
             streakDuration: 3000,
-            timeResults: [],
+            streakTracking: [],
             sentenceIndex: 0,
             totalCorrectCount: 0
         }
@@ -40,7 +40,7 @@ export default {
 
         this.intervalId = setInterval(() => {
             this.time = Date.now() - this.startTime
-            this.timeResults.push(this.streakCount)
+            this.streakTracking.push(this.streakCount)
             this.$refs.sentence.focus()
         }, 1000)
     },
@@ -62,10 +62,8 @@ export default {
                 time > this.time - this.streakDuration && this.textResult[index]).length
         },
         streakText () {
-            if (this.streakCount >= 8 * this.streakDuration)
-                return "Too fast!"
-            if (this.streakCount >= 4 * this.streakDuration)
-                return "Keep going!"
+            if (this.streakCount >= 8 * this.streakDuration) return "Too fast!"
+            if (this.streakCount >= 4 * this.streakDuration) return "Keep going!"
             return null
         }
     },
@@ -93,8 +91,8 @@ export default {
             this.writeTimes = []
 
             if (this.sentenceIndex === sentences.length - 1) {
-                let time = Date.now() - this.startTime
-                this.$emit('score', this.totalCorrectCount / (time / 1000))
+                let time = (Date.now() - this.startTime) / 1000
+                this.$emit('score', this.totalCorrectCount / time)
             } else {
                 this.sentenceIndex ++
             }
