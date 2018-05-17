@@ -1,5 +1,7 @@
 <template>
     <div>
+        <p class="time">{{ Math.floor(time / 1000) }}s</p>
+
         <p class="streak">{{ streakCount }} characters in the last {{ streakDuration / 1000 }} seconds</p>
 
         <div class="performance">
@@ -60,6 +62,11 @@ export default {
 </script>
 
 <style scoped>
+.time {
+    margin-top: 80px;
+    font-size: 30px;
+}
+
 .streak {
     font-size: 20px;
 }

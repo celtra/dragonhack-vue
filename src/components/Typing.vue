@@ -1,10 +1,10 @@
 <template>
     <div>
-        <div class="sentence" tabindex="0" @keydown="handleInput" ref="sentence">
+        <div class="sentence" tabindex="0">
             <span v-for="(c, index) in sentence" :key="index" :class="getClass(index)">{{ c }}</span>
         </div>
 
-        <p class="time">{{ Math.floor(time / 1000) }}s</p>
+        
         <p class="score">{{ correctCount }} / {{ text.length }}</p>
         
         <performance ref="performance"></performance>
@@ -13,7 +13,8 @@
 
 <script>
 import Performance from './Performance.vue'
-import { sentences, isValidChar } from '../data'
+import sentences from '../sentences'
+import listenForInput from '../input'
 
 export default {
     components: {
@@ -22,19 +23,13 @@ export default {
     data () {
         return {
             text: '',
-            time: 0,
             sentenceIndex: 0,
             totalCorrectCount: 0
         }
     },
     mounted () {
-        this.$refs.sentence.focus()
-
+        listenForInput(this.addInput, this.deleteInput)
         this.startTime = Date.now()
-
-        this.intervalId = setInterval(() => {
-            this.time = Date.now() - this.startTime
-        }, 1000)
     },
     computed: {
         sentence () {
@@ -48,12 +43,6 @@ export default {
         }
     },
     methods: {
-        handleInput (e) {
-            if (e.key === 'Backspace')
-                this.deleteInput()
-            else if (isValidChar(e.key))
-                this.addInput(e.key)
-        },
         deleteInput () {
             this.text = this.text.slice(0, -1)
         },
