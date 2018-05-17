@@ -6,7 +6,7 @@
             <p style="display: none">Streak text here</p>
         </div>
 
-        <div class="text" tabindex="0">
+        <div class="sentence" tabindex="0">
             <span class="correct">Correct</span>
             <span class="wrong">Wrong</span>
             <span class="current">Current</span>
