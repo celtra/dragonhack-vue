@@ -8,9 +8,9 @@
             <span v-for="(c, index) in sentence" :key="c.id" :class="getClass(index)">{{ c }}</span>
         </div>
 
-        <p class="time">{{ Math.floor(time) }}s</p>
-        <p class="score">{{ correctCharsCount }} / {{ text.length }}</p>
-        <p class="streak">{{ correctIndicesInLastSeconds.length }} characters in the last {{ streakDuration }} seconds</p>
+        <p class="time">{{ Math.floor(time / 1000) }}s</p>
+        <p class="score">{{ correctCount }} / {{ text.length }}</p>
+        <p class="streak">{{ streakCount }} characters in the last {{ streakDuration }} seconds</p>
 
         <div class="performance">
             <div v-for="(result, index) in timeResults" :key="index" :style="{ 'height': `${Math.floor(result * 2) + 5}%` }"></div>
@@ -24,23 +24,23 @@ import { sentences, isValidChar } from '../data'
 export default {
     data () {
         return {
-            streakDuration: 3,
-            sentenceIndex: 0,
             text: '',
-            totalCorrectCount: 0,
             time: 0,
             writeTimes: [],
-            timeResults: []
+            streakDuration: 3000,
+            timeResults: [],
+            sentenceIndex: 0,
+            totalCorrectCount: 0
         }
     },
     mounted () {
         this.$refs.sentence.focus()
 
-        this.startTime = Date.now() / 1000
+        this.startTime = Date.now()
 
         this.intervalId = setInterval(() => {
-            this.time = Date.now() / 1000 - this.startTime
-            this.timeResults.push(this.correctIndicesInLastSeconds.length)
+            this.time = Date.now() - this.startTime
+            this.timeResults.push(this.streakCount)
             this.$refs.sentence.focus()
         }, 1000)
     },
@@ -52,19 +52,19 @@ export default {
             return sentences[this.sentenceIndex]
         },
         textResult () {
-            return Array.from(this.text).map((c, index) => c === this.sentence.charAt(index))
+            return Array.from(this.text).map((c, index) => c === this.sentence[index])
         },
-        correctCharsCount () {
+        correctCount () {
             return this.textResult.filter(c => c).length
         },
-        correctIndicesInLastSeconds () {
+        streakCount () {
             return this.writeTimes.filter((time, index) =>  
-                time > this.time - this.streakDuration && this.textResult[index])
+                time > this.time - this.streakDuration && this.textResult[index]).length
         },
         streakText () {
-            if (this.correctIndicesInLastSeconds.length >= 8 * this.streakDuration)
+            if (this.streakCount >= 8 * this.streakDuration)
                 return "Too fast!"
-            if (this.correctIndicesInLastSeconds.length >= 5 * this.streakDuration)
+            if (this.streakCount >= 4 * this.streakDuration)
                 return "Keep going!"
             return null
         }
@@ -80,34 +80,30 @@ export default {
             this.writeTimes = this.writeTimes.slice(0, -1)
             this.text = this.text.slice(0, -1)
         },
-        addInput (key) {
-            this.writeTimes.push(Date.now() / 1000 - this.startTime)
-            this.text += key
+        addInput (char) {
+            this.writeTimes.push(Date.now() - this.startTime)
+            this.text += char
 
             if (this.text.length === this.sentence.length)
                 this.handleEndOfSentence()
         },
         handleEndOfSentence () {
-            this.totalCorrectCount += this.correctCharsCount
+            this.totalCorrectCount += this.correctCount
             this.text = ''
             this.writeTimes = []
 
             if (this.sentenceIndex === sentences.length - 1) {
-                let time = Date.now() / 1000 - this.startTime
-                this.$emit('score', this.totalCorrectCount / time)
+                let time = Date.now() - this.startTime
+                this.$emit('score', this.totalCorrectCount / (time / 1000))
             } else {
                 this.sentenceIndex ++
             }
         },
         getClass (index) {
-            if (index > this.text.length)
-                return ''
-            else if (index === this.text.length)
-                return 'current'
-            else if (this.textResult[index])
-                return 'correct'
-            else
-                return 'wrong'
+            if (index > this.text.length) return ''
+            else if (index === this.text.length) return 'current'
+            else if (this.textResult[index]) return 'correct'
+            else return 'wrong'
         }
     }
 }
