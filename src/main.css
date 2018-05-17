@@ -64,7 +64,7 @@ h2 {
 }
 
 /* TEXT */
-.text {
+.sentence {
     font-size: 24px;
     width: 80%;
     margin: 0 auto;
@@ -72,17 +72,17 @@ h2 {
     outline: none;
 }
 
-.text > span{
+.sentence > span{
     color: gray;
 }
-.text > span.current {
+.sentence > span.current {
     color: white;
     background-color: #000;
 }
-.text > span.correct {
+.sentence > span.correct {
     color: green;
 }
-.text > span.wrong {
+.sentence > span.wrong {
     color: red;
     border-bottom: 3px solid red;
 }

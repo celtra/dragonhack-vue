@@ -4,7 +4,7 @@
             <p v-if="streakText">{{ streakText }}</p>
         </div>
 
-        <div class="text" tabindex="0" @keydown="handleInput" ref="text">
+        <div class="sentence" tabindex="0" @keydown="handleInput" ref="text">
             <span v-for="(c, index) in text" :key="c.id" :class="getClass(index)">{{ c }}</span>
         </div>
 
