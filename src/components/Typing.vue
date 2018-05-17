@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { sentences, validCharacters } from '../data'
+import { sentences, isValidChar } from '../data'
 
 export default {
     data () {
@@ -73,9 +73,9 @@ export default {
     },
     methods: {
         handleInput (e) {
-            if (e.code === 'Backspace')
+            if (e.key === 'Backspace')
                 this.deleteInput()
-            else if (validCharacters.includes(e.key))
+            else if (isValidChar(e.key))
                 this.addInput(e.key)
         },
         deleteInput () {
