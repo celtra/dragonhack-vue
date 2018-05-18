@@ -1,9 +1,8 @@
 <template>
     <div>
-        <div class="sentence" tabindex="0">
-            <span v-for="(c, index) in sentence" :key="index" :class="getClass(index)">{{ c }}</span>
+        <div class="sentence">
+            <span v-for="(char, index) in sentence" :key="index" :class="getClass(index)">{{ char }}</span>
         </div>
-
         
         <p class="score">{{ correctCount }} / {{ text.length }}</p>
         
