@@ -4,10 +4,9 @@
             <span v-for="(c, index) in sentence" :key="index" :class="getClass(index)">{{ c }}</span>
         </div>
 
-        <p class="time">{{ Math.floor(time / 1000) }}s</p>
         <p class="score">{{ correctCount }} / {{ text.length }}</p>
         
-        <performance ref="performance"></performance>
+        <performance :write-times="writeTimes"></performance>
     </div>
 </template>
 
@@ -22,19 +21,14 @@ export default {
     data () {
         return {
             text: '',
-            time: 0,
+            writeTimes: [],
             sentenceIndex: 0,
             totalCorrectCount: 0
         }
     },
     mounted () {
         this.$refs.sentence.focus()
-
         this.startTime = Date.now()
-
-        this.intervalId = setInterval(() => {
-            this.time = Date.now() - this.startTime
-        }, 1000)
     },
     computed: {
         sentence () {
@@ -59,9 +53,9 @@ export default {
         },
         addInput (char) {
             this.text += char
-            if (this.sentence[this.text.length - 1] === char) {
-                this.$refs.performance.onCorrectCharacter()
-            }
+
+            if (this.textResult[this.text.length - 1])
+                this.writeTimes.push(Date.now() - this.startTime)
 
             if (this.text.length === this.sentence.length)
                 this.handleEndOfSentence()

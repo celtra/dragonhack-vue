@@ -1,5 +1,7 @@
 <template>
     <div>
+        <p class="time">{{ Math.floor(time / 1000) }}s</p>
+
         <p class="streak">{{ streakCount }} characters in the last {{ streakDuration / 1000 }} seconds</p>
 
         <div class="performance">
@@ -16,10 +18,12 @@
 
 <script>
 export default {
+    props: {
+        writeTimes: { type: Array, required: true }
+    },
     data () {
         return {
             time: 0,
-            writeTimes: [],
             streakDuration: 3000,
             streakTracking: [],
             lastStreakText: null
@@ -50,16 +54,16 @@ export default {
                 return "Keep going!"
             return null
         }
-    },
-    methods: {
-        onCorrectCharacter () {
-            this.writeTimes.push(Date.now() - this.startTime)
-        }
     }
 }
 </script>
 
 <style scoped>
+.time {
+    margin-top: 80px;
+    font-size: 30px;
+}
+
 .streak {
     font-size: 20px;
 }
