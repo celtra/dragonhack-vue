@@ -15,3 +15,17 @@ export function listenForInput(addCb, removeCb) {
         }
     })
 }
+
+export function getRange(stringList, globalIndex) {
+    let position = 0
+    for (let string of stringList) {
+        position += string.length
+        if (globalIndex < position) {
+            return {
+                from: position - string.length,
+                to: position
+            }
+        }
+    }
+    return null
+}
