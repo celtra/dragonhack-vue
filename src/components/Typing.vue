@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="sentence">
-            <span v-for="(char, index) in sentence" :key="index" :class="getClass(index)">{{ char }}</span>
+            <span v-for="(char, index) in targetText" :key="index" :class="getClass(index)">{{ char }}</span>
         </div>
 
         <p class="score">{{ correctCount }} / {{ text.length }}</p>
@@ -29,11 +29,11 @@ export default {
         this.startTime = Date.now()
     },
     computed: {
-        sentence () {
+        targetText () {
             return sentences[this.sentenceIndex]
         },
         textResult () {
-            return Array.from(this.text).map((c, index) => c === this.sentence[index])
+            return Array.from(this.text).map((c, index) => c === this.targetText[index])
         },
         correctCount () {
             return this.textResult.filter(c => c).length
@@ -49,7 +49,7 @@ export default {
             if (this.textResult[this.text.length - 1])
                 this.correctTimes.push(Date.now() - this.startTime)
 
-            if (this.text.length === this.sentence.length)
+            if (this.text.length === this.targetText.length)
                 this.handleEndOfSentence()
         },
         handleEndOfSentence () {
