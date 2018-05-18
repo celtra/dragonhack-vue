@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>{{ text }}</h2>
+        <h2>{{ greeting }}</h2>
 
         <div class="sentence">
             <span class="correct">S</span>
@@ -22,11 +22,10 @@
 import { sentences, listenForInput } from '../utils'
 
 export default {
-    components: {
-    },
+    components: {},
     data () {
         return {
-            text: 'Hello world!'
+            greeting: 'Hello world!'
         }
     },
     methods: {
