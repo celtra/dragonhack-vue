@@ -6,22 +6,20 @@
 
         <p class="score">{{ correctCount }} / {{ text.length }}</p>
         
-        <performance :write-times="writeTimes"></performance>
+        <Stats :times="correctTimes"></Stats>
     </div>
 </template>
 
 <script>
 import { sentences, listenForInput, getRange } from '../utils'
-import Performance from './Performance.vue'
+import Stats from './Stats.vue'
 
 export default {
-    components: {
-        performance: Performance
-    },
+    components: { Stats },
     data () {
         return {
             text: '',
-            writeTimes: []
+            correctTimes: []
         }
     },
     mounted () {
@@ -50,7 +48,7 @@ export default {
             this.text += char
 
             if (this.textResult[this.text.length - 1])
-                this.writeTimes.push(Date.now() - this.startTime)
+                this.correctTimes.push(Date.now() - this.startTime)
 
             if (this.text.length === this.targetText.length) {
                 let time = (Date.now() - this.startTime) / 1000

@@ -16,14 +16,14 @@ export function listenForInput(addCb, removeCb) {
     })
 }
 
-export function getRange(list, globalIndex) {
-    let currentIndex = 0
-    for (let sentence of sentences) {
-        currentIndex += sentence.length
-        if (globalIndex < currentIndex) {
+export function getRange(stringList, globalIndex) {
+    let position = 0
+    for (let string of stringList) {
+        position += string.length
+        if (globalIndex < position) {
             return {
-                from: currentIndex - sentence.length,
-                to: currentIndex
+                from: position - string.length,
+                to: position
             }
         }
     }
