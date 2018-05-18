@@ -18,10 +18,12 @@
 
 <script>
 export default {
+    props: {
+        writeTimes: { type: Array, required: true }
+    },
     data () {
         return {
             time: 0,
-            writeTimes: [],
             streakDuration: 3000,
             streakTracking: [],
             lastStreakText: null
@@ -51,11 +53,6 @@ export default {
             if (this.streakCount >= this.streakDuration / 1000 * 4)
                 return "Keep going!"
             return null
-        }
-    },
-    methods: {
-        onCorrectCharacter () {
-            this.writeTimes.push(Date.now() - this.startTime)
         }
     }
 }

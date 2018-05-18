@@ -3,10 +3,10 @@
         <div class="sentence">
             <span v-for="(char, index) in sentence" :key="index" :class="getClass(index)">{{ char }}</span>
         </div>
-        
+
         <p class="score">{{ correctCount }} / {{ text.length }}</p>
         
-        <performance ref="performance"></performance>
+        <performance :write-times="writeTimes"></performance>
     </div>
 </template>
 
@@ -22,6 +22,7 @@ export default {
     data () {
         return {
             text: '',
+            writeTimes: [],
             sentenceIndex: 0,
             totalCorrectCount: 0
         }
@@ -47,9 +48,9 @@ export default {
         },
         addInput (char) {
             this.text += char
-            if (this.sentence[this.text.length - 1] === char) {
-                this.$refs.performance.onCorrectCharacter()
-            }
+
+            if (this.textResult[this.text.length - 1])
+                this.writeTimes.push(Date.now() - this.startTime)
 
             if (this.text.length === this.sentence.length)
                 this.handleEndOfSentence()
