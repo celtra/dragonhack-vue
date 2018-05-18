@@ -15,3 +15,17 @@ export function listenForInput(addCb, removeCb) {
         }
     })
 }
+
+export function getRange(list, globalIndex) {
+    let currentIndex = 0
+    for (let sentence of sentences) {
+        currentIndex += sentence.length
+        if (globalIndex < currentIndex) {
+            return {
+                from: currentIndex - sentence.length,
+                to: currentIndex
+            }
+        }
+    }
+    return null
+}

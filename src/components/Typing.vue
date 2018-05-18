@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="sentence">
-            <span v-for="(char, index) in sentence" :key="index" :class="getClass(index)">{{ char }}</span>
+            <span v-for="(char, index) in targetText.slice(visibleRange.from, visibleRange.to)" :key="index" :class="getClass(visibleRange.from + index)">{{ char }}</span>
         </div>
 
         <p class="score">{{ correctCount }} / {{ text.length }}</p>
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { sentences, listenForInput } from '../utils'
+import { sentences, listenForInput, getRange } from '../utils'
 import Performance from './Performance.vue'
 
 export default {
@@ -21,9 +21,7 @@ export default {
     data () {
         return {
             text: '',
-            writeTimes: [],
-            sentenceIndex: 0,
-            totalCorrectCount: 0
+            writeTimes: []
         }
     },
     mounted () {
@@ -31,11 +29,14 @@ export default {
         this.startTime = Date.now()
     },
     computed: {
-        sentence () {
-            return sentences[this.sentenceIndex]
+        targetText () {
+            return sentences.join('')
+        },
+        visibleRange () {
+            return getRange(sentences, this.text.length)
         },
         textResult () {
-            return Array.from(this.text).map((c, index) => c === this.sentence[index])
+            return Array.from(this.text).map((c, index) => c === this.targetText[index])
         },
         correctCount () {
             return this.textResult.filter(c => c).length
@@ -51,18 +52,9 @@ export default {
             if (this.textResult[this.text.length - 1])
                 this.writeTimes.push(Date.now() - this.startTime)
 
-            if (this.text.length === this.sentence.length)
-                this.handleEndOfSentence()
-        },
-        handleEndOfSentence () {
-            this.totalCorrectCount += this.correctCount
-            this.text = ''
-
-            if (this.sentenceIndex === sentences.length - 1) {
+            if (this.text.length === this.targetText.length) {
                 let time = (Date.now() - this.startTime) / 1000
-                this.$emit('score', this.totalCorrectCount / time)
-            } else {
-                this.sentenceIndex ++
+                this.$emit('score', this.correctCount / time)
             }
         },
         getClass (index) {
