@@ -19,7 +19,7 @@
 <script>
 export default {
     props: {
-        writeTimes: { type: Array, required: true }
+        times: { type: Array, required: true }
     },
     data () {
         return {
@@ -32,10 +32,13 @@ export default {
     created () {
         this.startTime = Date.now()
 
-        setInterval(() => {
+        this.intervalId = setInterval(() => {
             this.time = Date.now() - this.startTime
             this.streakTracking.push(this.streakCount)
         }, 1000)
+    },
+    beforeDestroy () {
+        clearInterval(this.intervalId)
     },
     watch: {
         streakText (v) {
@@ -45,7 +48,7 @@ export default {
     },
     computed: {
         streakCount () {
-            return this.writeTimes.filter((time, index) => time > this.time - this.streakDuration).length
+            return this.times.filter((time, index) => time > this.time - this.streakDuration).length
         },
         streakText () {
             if (this.streakCount >= this.streakDuration / 1000 * 8)
