@@ -7,6 +7,9 @@ export const sentences = [
 
 export function listenForInput(addCb, removeCb) {
     window.addEventListener('keydown', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+
         if (e.key === 'Backspace') {
             if (removeCb)
                 removeCb()
