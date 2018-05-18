@@ -11,9 +11,8 @@
 </template>
 
 <script>
+import { sentences, listenForInput } from '../utils'
 import Performance from './Performance.vue'
-import sentences from '../sentences'
-import listenForInput from '../input'
 
 export default {
     components: {

@@ -67,13 +67,14 @@ h2 {
 .sentence {
     margin: 0 auto;
     margin-top: 150px;
-    font-size: 24px;
+    font-size: 0px;
     width: 80%;
     text-align: center;
     outline: none;
 }
 
 .sentence > span{
+    font-size: 24px;
     color: gray;
 }
 .sentence > span.current {
