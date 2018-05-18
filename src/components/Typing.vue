@@ -58,7 +58,7 @@ export default {
 
             if (this.sentenceIndex === sentences.length - 1) {
                 let time = (Date.now() - this.startTime) / 1000
-                this.$emit('score', this.totalCorrectCount / time)
+                this.$emit('finish', this.totalCorrectCount / time)
             } else {
                 this.sentenceIndex ++
             }
