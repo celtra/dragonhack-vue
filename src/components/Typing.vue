@@ -1,7 +1,11 @@
 <template>
     <div>
         <div class="sentence">
-            <span v-for="(char, index) in targetText.slice(visibleRange.from, visibleRange.to)" :key="index" :class="getClass(visibleRange.from + index)">{{ char }}</span>
+            <span
+                v-for="(char, index) in targetText.slice(visibleRange.from, visibleRange.to)" :key="index"
+                :class="getClass(visibleRange.from + index)">
+                {{ char }}
+            </span>
         </div>
 
         <p class="score">{{ correctCount }} / {{ text.length }}</p>
