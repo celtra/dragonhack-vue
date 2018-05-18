@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Typing v-if="isPlaying" @score="addScore" />
+        <Typing v-if="isPlaying" @finish="addScore" />
         <div class="main" v-else>
             <button @click="isPlaying = true">I'm ready, play again!</button>
 
@@ -48,7 +48,3 @@ export default {
     }
 }
 </script>
-
-<style>
-@import './main.css';
-</style>

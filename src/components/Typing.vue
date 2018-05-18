@@ -52,7 +52,7 @@ export default {
 
             if (this.text.length === this.targetText.length) {
                 let time = (Date.now() - this.startTime) / 1000
-                this.$emit('score', this.correctCount / time)
+                this.$emit('finish', this.correctCount / time)
             }
         },
         getClass (index) {
@@ -68,3 +68,7 @@ export default {
     }
 }
 </script>
+
+<style>
+@import '../main.css';
+</style>
