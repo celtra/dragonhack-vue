@@ -2,37 +2,34 @@
     <div>
         <h2>{{ text }}</h2>
 
-        <div class="streak-message">
-            <p style="display: none">Streak text here</p>
+        <div class="sentence">
+            <span class="correct">S</span>
+            <span class="correct">o</span>
+            <span class="wrong">m</span>
+            <span class="wrong">e</span>
+            <span class="correct">t</span>
+            <span class="current">h</span>
+            <span>i</span>
+            <span>n</span>
+            <span>g</span>
         </div>
 
-        <div class="sentence" tabindex="0">
-            <span class="correct">Correct</span>
-            <span class="wrong">Wrong</span>
-            <span class="current">Current</span>
-            <span>Neutral</span>
-        </div>
-
-        <p class="time">0s</p>
         <p class="score">0 / 0</p>
-        <p class="streak">0 characters in the last 5 seconds</p>
-
-        <div class="performance">
-            <div style="height: 5%;"></div>
-            <div style="height: 40%;"></div>
-            <div style="height: 20%;"></div>
-        </div>
     </div>
 </template>
 
 <script>
-import { sentences, isValidChar } from '../data'
+import { sentences, listenForInput } from '../utils'
 
 export default {
+    components: {
+    },
     data () {
         return {
             text: 'Hello class'
         }
+    },
+    methods: {
     }
 }
 </script>

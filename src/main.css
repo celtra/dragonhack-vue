@@ -65,14 +65,16 @@ h2 {
 
 /* TEXT */
 .sentence {
-    font-size: 24px;
-    width: 80%;
     margin: 0 auto;
+    margin-top: 150px;
+    font-size: 0px;
+    width: 80%;
     text-align: center;
     outline: none;
 }
 
 .sentence > span{
+    font-size: 24px;
     color: gray;
 }
 .sentence > span.current {
@@ -88,69 +90,8 @@ h2 {
 }
 
 /* INFO */
-.streak-message {
-    display: block;
-    margin: 50px auto;
-    padding: 0px 50px;
-    color: white;
-    font-size: 36px;
-    height: 80px;
-    line-height: 80px;
-    width: 400px;
-    animation: blinker 1s ease infinite;
-}
-
-.streak-message > p {
-    background-color: #18cc7e;
-}
-
-@keyframes blinker {
-    50% {
-        opacity: 0.7;
-    }
-}
-
-.time {
-    margin-top: 80px;
-    font-size: 30px;
-}
-
 .score {
     margin-top: 20px;
     font-size: 32px;
     font-weight: bold;
-}
-
-.streak {
-    font-size: 20px;
-}
-
-/* GRAPH */
-.performance {
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    height: 200px;
-    width: 415px;
-    overflow: hidden;
-    margin: 20px auto 0px auto;
-}
-
-.performance > div {
-    width: 30px;
-    margin-left: 5px;
-    background-color: #00b1ff;
-    animation: expand 0.3s ease-out;
-    flex-shrink: 0;
-}
-
-@keyframes expand {
-    from {
-        width: 0px;
-        margin-left: 0px;
-    }
-    to {
-        width: 30px;
-        margin-left: 5px;
-    }
 }
