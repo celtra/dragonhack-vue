@@ -48,7 +48,3 @@ export default {
     }
 }
 </script>
-
-<style>
-@import './main.css';
-</style>
